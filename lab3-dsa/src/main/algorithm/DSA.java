@@ -17,8 +17,8 @@ public class DSA {
         // R
         BigInteger r = publicG.modPow(k, publicP).mod(publicQ);
         // S
-        MessageDigest md;
         BigInteger s = BigInteger.ONE;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
             md.update(message.getBytes());
@@ -32,7 +32,7 @@ public class DSA {
 
     public static Boolean verify(String message, BigInteger r, BigInteger s,
                                  BigInteger publicG, BigInteger publicP,
-                                 BigInteger publicQ, BigInteger privateY) {
+                                 BigInteger publicQ, BigInteger publicY) {
         MessageDigest md;
         BigInteger v = BigInteger.ZERO;
         try {
@@ -47,7 +47,7 @@ public class DSA {
             // U2
             BigInteger u2 = r.multiply(w).mod(publicQ);
             // V
-            v = ((publicG.modPow(u1, publicP).multiply(privateY.modPow(u2, publicP))).mod(publicP)).mod(publicQ);
+            v = ((publicG.modPow(u1, publicP).multiply(publicY.modPow(u2, publicP))).mod(publicP)).mod(publicQ);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

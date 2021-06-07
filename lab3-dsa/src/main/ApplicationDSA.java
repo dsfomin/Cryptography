@@ -11,8 +11,8 @@ import java.math.BigInteger;
 public class ApplicationDSA extends JFrame {
 
     public JTextField signTextFieldMessage, verifyTextFieldMessage, signKeyQTextField, signKeyPTextField,
-            signKeyGTextField, signTextFieldPrivateX, signTextFieldPrivateY, signTextFieldSignatureR, signTextFieldSignatureS,
-            verifyKeyQTextField, verifyKeyGTextField, verifyKeyPTextField, verifyTextFieldPrivateY, verifyTextFieldSignatureR, verifyTextFieldSignatureS;
+            signKeyGTextField, signTextFieldPrivateX, signTextFieldPublicY, signTextFieldSignatureR, signTextFieldSignatureS,
+            verifyKeyQTextField, verifyKeyGTextField, verifyKeyPTextField, verifyTextFieldPublicY, verifyTextFieldSignatureR, verifyTextFieldSignatureS;
     public JButton signButton;
     public Font appFont = new Font("Verdana", Font.PLAIN, 10);
 
@@ -57,7 +57,7 @@ public class ApplicationDSA extends JFrame {
                 signKeyPTextField.setText(session.getGlobalKeyP().toString());
                 signKeyQTextField.setText(session.getGlobalKeyQ().toString());
                 signTextFieldPrivateX.setText(privateKeys.getFirst().toString());
-                signTextFieldPrivateY.setText(privateKeys.getSecond().toString());
+                signTextFieldPublicY.setText(privateKeys.getSecond().toString());
                 if (signTextFieldMessage.getText().length() != 0) {
                     Pair<BigInteger, BigInteger> signature = DSA.sign(signTextFieldMessage.getText(), session.getGlobalKeyG(),
                             session.getGlobalKeyP(), session.getGlobalKeyQ(), privateKeys.getFirst());
@@ -79,7 +79,7 @@ public class ApplicationDSA extends JFrame {
                     verifyKeyPTextField.getText().length() == 0 ||
                     verifyKeyQTextField.getText().length() == 0 ||
                     verifyTextFieldMessage.getText().length() == 0 ||
-                    verifyTextFieldPrivateY.getText().length() == 0 ||
+                    verifyTextFieldPublicY.getText().length() == 0 ||
                     verifyTextFieldSignatureR.getText().length() == 0 ||
                     verifyTextFieldSignatureS.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null,
@@ -95,7 +95,7 @@ public class ApplicationDSA extends JFrame {
                     g = new BigInteger(verifyKeyGTextField.getText(), 10);
                     p = new BigInteger(verifyKeyPTextField.getText(), 10);
                     q = new BigInteger(verifyKeyQTextField.getText(), 10);
-                    y = new BigInteger(verifyTextFieldPrivateY.getText(), 10);
+                    y = new BigInteger(verifyTextFieldPublicY.getText(), 10);
                     res = DSA.verify(verifyTextFieldMessage.getText(), r, s, g, p, q, y);
                 } catch (Exception event) {
                     JOptionPane.showMessageDialog(null,
@@ -136,14 +136,14 @@ public class ApplicationDSA extends JFrame {
         signKeyPTextField = new JTextField(100);
         signKeyGTextField = new JTextField(100);
         signTextFieldPrivateX = new JTextField(100);
-        signTextFieldPrivateY = new JTextField(100);
+        signTextFieldPublicY = new JTextField(100);
         signTextFieldSignatureR = new JTextField(100);
         signTextFieldSignatureS = new JTextField(100);
 
         verifyKeyQTextField = new JTextField(100);
         verifyKeyPTextField = new JTextField(100);
         verifyKeyGTextField = new JTextField(100);
-        verifyTextFieldPrivateY = new JTextField(100);
+        verifyTextFieldPublicY = new JTextField(100);
         verifyTextFieldSignatureR = new JTextField(100);
         verifyTextFieldSignatureS = new JTextField(100);
 
@@ -170,7 +170,7 @@ public class ApplicationDSA extends JFrame {
         signTab.add(signKeyQTextField);
         signTab.add(signKeyPTextField);
         signTab.add(signTextFieldPrivateX);
-        signTab.add(signTextFieldPrivateY);
+        signTab.add(signTextFieldPublicY);
         signTab.add(signTextFieldSignatureR);
         signTab.add(signTextFieldSignatureS);
 
@@ -186,7 +186,7 @@ public class ApplicationDSA extends JFrame {
         verifyTab.add(verifyKeyGTextField);
         verifyTab.add(verifyKeyQTextField);
         verifyTab.add(verifyKeyPTextField);
-        verifyTab.add(verifyTextFieldPrivateY);
+        verifyTab.add(verifyTextFieldPublicY);
         verifyTab.add(verifyTextFieldSignatureR);
         verifyTab.add(verifyTextFieldSignatureS);
 
@@ -266,8 +266,8 @@ public class ApplicationDSA extends JFrame {
         size = signTextFieldPrivateX.getPreferredSize();
         signTextFieldPrivateX.setBounds(115 + insetsSign.left, 220 + insetsSign.top, size.width, size.height);
 
-        size = signTextFieldPrivateY.getPreferredSize();
-        signTextFieldPrivateY.setBounds(115 + insetsSign.left, 270 + insetsSign.top, size.width, size.height);
+        size = signTextFieldPublicY.getPreferredSize();
+        signTextFieldPublicY.setBounds(115 + insetsSign.left, 270 + insetsSign.top, size.width, size.height);
 
         size = signTextFieldSignatureR.getPreferredSize();
         signTextFieldSignatureR.setBounds(115 + insetsSign.left, 320 + insetsSign.top, size.width, size.height);
@@ -284,8 +284,8 @@ public class ApplicationDSA extends JFrame {
         size = verifyKeyQTextField.getPreferredSize();
         verifyKeyGTextField.setBounds(115 + insetsVerify.left, 170 + insetsVerify.top, size.width, size.height);
 
-        size = verifyTextFieldPrivateY.getPreferredSize();
-        verifyTextFieldPrivateY.setBounds(115 + insetsVerify.left, 220 + insetsVerify.top, size.width, size.height);
+        size = verifyTextFieldPublicY.getPreferredSize();
+        verifyTextFieldPublicY.setBounds(115 + insetsVerify.left, 220 + insetsVerify.top, size.width, size.height);
 
         size = verifyTextFieldSignatureR.getPreferredSize();
         verifyTextFieldSignatureR.setBounds(115 + insetsVerify.left, 270 + insetsVerify.top, size.width, size.height);
